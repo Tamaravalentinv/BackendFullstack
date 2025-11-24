@@ -1,6 +1,7 @@
-package com.tienda.backend.repository;
+package com.example.backend_evaluacion.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.tienda.backend.entity.Venta;
+import com.example.backend_evaluacion.entity.Venta;
 
-public interface VentaRepository extends JpaRepository<Venta, Long> {}
+public interface VentaRepository extends JpaRepository<Venta, Long> {
+}

@@ -1,4 +1,4 @@
-package com.tienda.backend.security;
+package com.example.backend_evaluacion.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -10,7 +10,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    // 🔐 Clave de 256 bits para HS256
+    // Clave de 256 bits para HS256
     private static final String SECRET_KEY = "QwertyUIOPasdfghJKLzxcvBNM123456QwertyUIOPasdfghKK";
 
     private Key getSigningKey() {

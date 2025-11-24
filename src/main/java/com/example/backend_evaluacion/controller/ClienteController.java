@@ -1,7 +1,7 @@
 package com.example.backend_evaluacion.controller;
 
-import com.example.backend_evaluacion.entity.Venta;
-import com.example.backend_evaluacion.service.VentaService;
+import com.example.backend_evaluacion.entity.Cliente;
+import com.example.backend_evaluacion.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -9,34 +9,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/ventas")
+@RequestMapping("/api/v1/clientes")
 @RequiredArgsConstructor
-public class VentaController {
+public class ClienteController {
 
-    private final VentaService service;
+    private final ClienteService service;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
-    public List<Venta> listar() {
+    public List<Cliente> listar() {
         return service.listar();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
-    public Venta obtener(@PathVariable Long id) {
+    public Cliente obtener(@PathVariable Long id) {
         return service.obtener(id);
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
-    public Venta registrar(@RequestBody Venta v) {
-        return service.registrar(v);
+    public Cliente guardar(@RequestBody Cliente c) {
+        return service.guardar(c);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public Venta actualizar(@PathVariable Long id, @RequestBody Venta v) {
-        return service.actualizar(id, v);
+    @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
+    public Cliente actualizar(@PathVariable Long id, @RequestBody Cliente c) {
+        return service.actualizar(id, c);
     }
 
     @DeleteMapping("/{id}")
@@ -45,4 +45,3 @@ public class VentaController {
         service.eliminar(id);
     }
 }
-

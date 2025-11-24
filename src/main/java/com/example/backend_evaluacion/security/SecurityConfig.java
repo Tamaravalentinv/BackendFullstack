@@ -1,4 +1,4 @@
-package com.tienda.backend.security;
+package com.example.backend_evaluacion.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

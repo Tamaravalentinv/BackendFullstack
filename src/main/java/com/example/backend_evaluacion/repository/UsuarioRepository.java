@@ -1,7 +1,7 @@
-package com.tienda.backend.repository;
+package com.example.backend_evaluacion.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.tienda.backend.entity.Usuario;
+import com.example.backend_evaluacion.entity.Usuario;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {

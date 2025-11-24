@@ -5,34 +5,32 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "clientes")
 @Data
-public class Usuario {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
     @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
+    private String apellido;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rol_id")
-    private Rol rol;
+    @Column(length = 20)
+    private String telefono;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT true")
-    private Boolean activo = true;
+    @Column(length = 500)
+    private String direccion;
 
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+    @Column(length = 20)
+    private String ciudad;
+
+    private LocalDateTime fechaRegistro = LocalDateTime.now();
     private LocalDateTime fechaActualizacion = LocalDateTime.now();
 }
-

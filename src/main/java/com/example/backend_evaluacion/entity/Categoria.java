@@ -5,15 +5,14 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "categorias")
 @Data
-public class Rol {
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ADMIN / VENDEDOR
     @Column(nullable = false, unique = true)
     private String nombre;
 
@@ -21,4 +20,5 @@ public class Rol {
     private String descripcion;
 
     private LocalDateTime fechaCreacion = LocalDateTime.now();
+    private LocalDateTime fechaActualizacion = LocalDateTime.now();
 }

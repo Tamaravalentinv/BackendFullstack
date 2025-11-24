@@ -1,9 +1,9 @@
-package com.tienda.backend.controller;
+package com.example.backend_evaluacion.controller;
 
-import com.tienda.backend.dto.LoginDTO;
-import com.tienda.backend.entity.Usuario;
-import com.tienda.backend.security.JwtUtil;
-import com.tienda.backend.service.UsuarioService;
+import com.example.backend_evaluacion.dto.LoginDTO;
+import com.example.backend_evaluacion.entity.Usuario;
+import com.example.backend_evaluacion.security.JwtUtil;
+import com.example.backend_evaluacion.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;

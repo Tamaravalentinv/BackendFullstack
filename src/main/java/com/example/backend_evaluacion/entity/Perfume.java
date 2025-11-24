@@ -3,35 +3,41 @@ package com.example.backend_evaluacion.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
-import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ventas")
+@Table(name = "perfumes")
 @Data
-public class Venta {
+public class Perfume {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    @Column(nullable = false)
+    private String nombre;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "vendedor_id")
-    private Usuario vendedor;
+    @JoinColumn(name = "marca_id")
+    private Marca marca;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
     @Column(nullable = false, columnDefinition = "DECIMAL(10,2)")
-    private BigDecimal montoTotal;
+    private Double precio;
 
-    private LocalDateTime fecha = LocalDateTime.now();
-
-    @Column(length = 20)
-    private String estado; // PENDIENTE, COMPLETADA, CANCELADA
+    @Column(nullable = false)
+    private Integer stock;
 
     @Column(length = 500)
-    private String observaciones;
+    private String descripcion;
+
+    @Column(length = 50)
+    private String tamanio; // ml
+
+    @Column(length = 20)
+    private String tipo; // EDP, EDT, Eau de Cologne, etc.
 
     private LocalDateTime fechaCreacion = LocalDateTime.now();
     private LocalDateTime fechaActualizacion = LocalDateTime.now();

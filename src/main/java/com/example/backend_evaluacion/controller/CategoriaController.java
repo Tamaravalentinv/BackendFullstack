@@ -1,7 +1,7 @@
-package com.tienda.backend.controller;
+package com.example.backend_evaluacion.controller;
 
-import com.tienda.backend.entity.Producto;
-import com.tienda.backend.service.ProductoService;
+import com.example.backend_evaluacion.entity.Categoria;
+import com.example.backend_evaluacion.service.CategoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -9,34 +9,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/productos")
+@RequestMapping("/api/v1/categorias")
 @RequiredArgsConstructor
-public class ProductoController {
+public class CategoriaController {
 
-    private final ProductoService service;
+    private final CategoriaService service;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
-    public List<Producto> listar() {
+    public List<Categoria> listar() {
         return service.listar();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
-    public Producto obtener(@PathVariable Long id) {
+    public Categoria obtener(@PathVariable Long id) {
         return service.obtener(id);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Producto guardar(@RequestBody Producto p) {
-        return service.guardar(p);
+    public Categoria guardar(@RequestBody Categoria c) {
+        return service.guardar(c);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Producto actualizar(@PathVariable Long id, @RequestBody Producto p) {
-        return service.actualizar(id, p);
+    public Categoria actualizar(@PathVariable Long id, @RequestBody Categoria c) {
+        return service.actualizar(id, c);
     }
 
     @DeleteMapping("/{id}")

@@ -1,4 +1,4 @@
-package com.tienda.backend.dto;
+package com.example.backend_evaluacion.dto;
 
 import lombok.Data;
 

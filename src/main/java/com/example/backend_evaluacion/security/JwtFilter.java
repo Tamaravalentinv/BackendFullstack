@@ -1,4 +1,4 @@
-package com.tienda.backend.security;
+package com.example.backend_evaluacion.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.tienda.backend.service.UsuarioService;
+import com.example.backend_evaluacion.service.UsuarioService;
 import io.jsonwebtoken.Claims;
 
 @Component

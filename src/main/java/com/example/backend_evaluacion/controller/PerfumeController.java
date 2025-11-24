@@ -1,7 +1,7 @@
 package com.example.backend_evaluacion.controller;
 
-import com.example.backend_evaluacion.entity.Venta;
-import com.example.backend_evaluacion.service.VentaService;
+import com.example.backend_evaluacion.entity.Perfume;
+import com.example.backend_evaluacion.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -9,34 +9,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/ventas")
+@RequestMapping("/api/v1/perfumes")
 @RequiredArgsConstructor
-public class VentaController {
+public class PerfumeController {
 
-    private final VentaService service;
+    private final PerfumeService service;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
-    public List<Venta> listar() {
+    public List<Perfume> listar() {
         return service.listar();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
-    public Venta obtener(@PathVariable Long id) {
+    public Perfume obtener(@PathVariable Long id) {
         return service.obtener(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
-    public Venta registrar(@RequestBody Venta v) {
-        return service.registrar(v);
+    @PreAuthorize("hasRole('ADMIN')")
+    public Perfume guardar(@RequestBody Perfume p) {
+        return service.guardar(p);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Venta actualizar(@PathVariable Long id, @RequestBody Venta v) {
-        return service.actualizar(id, v);
+    public Perfume actualizar(@PathVariable Long id, @RequestBody Perfume p) {
+        return service.actualizar(id, p);
     }
 
     @DeleteMapping("/{id}")
@@ -45,4 +45,3 @@ public class VentaController {
         service.eliminar(id);
     }
 }
-
