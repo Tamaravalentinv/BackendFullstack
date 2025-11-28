@@ -8,17 +8,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private JwtFilter jwtFilter;
+    // Inject JwtFilter via method parameter to avoid circular reference
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
 
         http.csrf(cs -> cs.disable());
         http.cors(cors -> cors.configure(http));
@@ -27,10 +25,9 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/api/v1/auth/**",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**"
-                ).permitAll()
-                .anyRequest().authenticated()
-        );
+                        "/v3/api-docs/**")
+                .permitAll()
+                .anyRequest().authenticated());
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -42,4 +39,3 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-
