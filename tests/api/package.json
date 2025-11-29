@@ -1,0 +1,13 @@
+{
+  "name": "backendfullstack-api-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "axios": "1.7.7"
+  },
+  "scripts": {
+    "test": "node run.js",
+    "test:windows": "node run.js"
+  }
+}
