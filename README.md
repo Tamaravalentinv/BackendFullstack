@@ -20,7 +20,7 @@ start-backend.bat
 
 # Opción B: Ejecutar directamente
 cd BackendFullstack
-set JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.0.9.10-hotspot
+set JAVA_HOME=C:\Program Files\Java\jdk-21
 mvnw.cmd spring-boot:run -DskipTests
 ```
 
@@ -63,6 +63,8 @@ El frontend estará en: **http://localhost:3000**
 
 **Q: El backend dice "JAVA_HOME not found"**
 - Edita `start-backend.bat` y ajusta la ruta de Java según tu instalación
+- Ruta típica: `C:\Program Files\Java\jdk-21`
+- Verifica con: `"C:\Program Files\Java\jdk-21\bin\java" -version`
 
 **Q: "Can't connect to MySQL"**
 - Verifica que XAMPP está corriendo

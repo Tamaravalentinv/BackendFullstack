@@ -51,8 +51,22 @@ $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-21.0.9.10-hotspot"
 **Nota:** Esto compilará el proyecto con el flag `-parameters` necesario para que Spring resuelva los parámetros correctamente.
 
 ### 3.4 Inicia el backend
+#### Opción PowerShell
 ```powershell
 .\mvnw spring-boot:run
+```
+
+#### Opción cmd (Windows)
+```bat
+cd /d C:\Users\frang\Downloads\evalucion3\BackendFullstack
+mvn -DskipTests spring-boot:run
+```
+
+Si necesitas establecer Java en esa terminal:
+```bat
+set "JAVA_HOME=C:\Program Files\Java\jdk-21"
+set "PATH=%JAVA_HOME%\bin;%PATH%"
+mvn -DskipTests spring-boot:run
 ```
 
 **Resultado esperado:**

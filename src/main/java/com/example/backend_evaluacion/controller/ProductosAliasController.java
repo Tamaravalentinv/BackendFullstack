@@ -16,13 +16,13 @@ public class ProductosAliasController {
     private final PerfumeService perfumeService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
+    // Público para catálogo
     public List<Perfume> listar() {
         return perfumeService.listar();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','VENDEDOR')")
+    // Público para detalle de catálogo
     public Perfume obtener(@PathVariable Long id) {
         return perfumeService.obtener(id);
     }

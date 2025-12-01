@@ -1,9 +1,15 @@
 package com.example.backend_evaluacion.service;
 
 import com.example.backend_evaluacion.entity.Venta;
+import com.example.backend_evaluacion.entity.Usuario;
+import com.example.backend_evaluacion.entity.Cliente;
 import com.example.backend_evaluacion.repository.VentaRepository;
+import com.example.backend_evaluacion.repository.UsuarioRepository;
+import com.example.backend_evaluacion.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,6 +20,8 @@ import java.util.List;
 public class VentaService {
 
     private final VentaRepository repo;
+    private final UsuarioRepository usuarioRepository;
+    private final ClienteRepository clienteRepository;
 
     /**
      * Lista todas las ventas registradas
@@ -30,6 +38,37 @@ public class VentaService {
      * - Estado requerido (PENDIENTE, COMPLETADA, CANCELADA)
      */
     public Venta registrar(Venta v) {
+        // Completar datos faltantes desde el usuario autenticado, si aplica
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated()) {
+            String username = auth.getName();
+            usuarioRepository.findByUsername(username).ifPresent(u -> {
+                if (v.getVendedor() == null) {
+                    v.setVendedor(u);
+                }
+                if (v.getCliente() == null) {
+                    // Intentar por email
+                    clienteRepository.findByEmail(u.getEmail()).ifPresent(v::setCliente);
+                    // Fallback: crear cliente si no existe
+                    if (v.getCliente() == null) {
+                        Cliente nuevo = new Cliente();
+                        String nombreCompleto = u.getNombre() != null ? u.getNombre() : u.getUsername();
+                        String nombre = nombreCompleto;
+                        String apellido = "N/A";
+                        if (nombreCompleto.contains(" ")) {
+                            String[] partes = nombreCompleto.trim().split(" ", 2);
+                            nombre = partes[0];
+                            apellido = partes.length > 1 ? partes[1] : "N/A";
+                        }
+                        nuevo.setNombre(nombre);
+                        nuevo.setApellido(apellido);
+                        nuevo.setEmail(u.getEmail());
+                        Cliente guardado = clienteRepository.save(nuevo);
+                        v.setCliente(guardado);
+                    }
+                }
+            });
+        }
         validarVenta(v);
         v.setFechaCreacion(LocalDateTime.now());
         v.setFechaActualizacion(LocalDateTime.now());

@@ -42,14 +42,13 @@ public class AuthController {
 
         String token = jwtUtil.generarToken(
                 usuario.getUsername(),
-                usuario.getRol().getNombre()
-        );
+                usuario.getRol().getNombre());
 
         return Map.of(
                 "token", token,
+                "id", usuario.getId(),
                 "usuario", usuario.getUsername(),
-                "rol", usuario.getRol().getNombre()
-        );
+                "rol", usuario.getRol().getNombre());
     }
 
     @GetMapping("/validate")

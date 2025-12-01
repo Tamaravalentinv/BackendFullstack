@@ -20,22 +20,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**", "/api/v1/ping", "/swagger-ui/**", "/v3/api-docs/**")
-                .permitAll()
-                .requestMatchers("/api/v1/perfumes/**")
-                .authenticated()
-                .anyRequest()
-                .authenticated())
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-            .exceptionHandling(ex -> ex
-                .authenticationEntryPoint((request, response, authException) -> {
-                    response.setStatus(401);
-                    response.setContentType("application/json");
-                    response.getWriter().write("{\"error\": \"Unauthorized\"}");
-                }));
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**", "/api/v1/ping", "/swagger-ui/**", "/v3/api-docs/**")
+                        .permitAll()
+                        // Permitir GET públicos de catálogo
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/v1/products/**",
+                                "/api/v1/perfumes/**", "/api/v1/productos/**")
+                        .permitAll()
+                        // Órdenes requieren autenticación
+                        .requestMatchers("/api/v1/orders/**").authenticated()
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(401);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"Unauthorized\"}");
+                        }));
 
         return http.build();
     }
@@ -43,12 +47,17 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "*"));
+        // Permitir todos los orígenes para desarrollo (más permisivo)
+        config.setAllowedOriginPatterns(List.of("*"));
+        // Allow standard methods including preflight
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        // Allow necessary headers for JWT and CORS preflight
+        config.setAllowedHeaders(List.of("*"));
+        // Expose Authorization if needed client-side
+        config.setExposedHeaders(List.of("Authorization"));
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
