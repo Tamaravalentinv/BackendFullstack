@@ -39,6 +39,9 @@ public class Perfume {
     @Column(length = 20)
     private String tipo; // EDP, EDT, Eau de Cologne, etc.
 
+    @Column(length = 1000)
+    private String imagen; // URL de la imagen del perfume
+
     private LocalDateTime fechaCreacion = LocalDateTime.now();
     private LocalDateTime fechaActualizacion = LocalDateTime.now();
 }

@@ -4,6 +4,8 @@ import com.example.backend_evaluacion.entity.Usuario;
 import com.example.backend_evaluacion.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import java.util.Collections;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -23,11 +25,13 @@ public class UsuarioService implements UserDetailsService {
         Usuario user = repo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
+        // Build UserDetails with explicit authorities to avoid role-mapping inconsistencies
+        var authority = new SimpleGrantedAuthority("ROLE_" + user.getRol().getNombre());
         return User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .roles(user.getRol().getNombre())
-                .build();
+            .username(user.getUsername())
+            .password(user.getPassword())
+            .authorities(Collections.singletonList(authority))
+            .build();
     }
 
     public Usuario getByUsername(String username) {

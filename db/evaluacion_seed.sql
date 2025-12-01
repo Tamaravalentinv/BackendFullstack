@@ -19,11 +19,11 @@ INSERT INTO marcas (nombre, descripcion, pais, fechaCreacion, fechaActualizacion
  ('Calvin Klein','CK', 'EEUU', NOW(), NOW());
 
 -- Perfumes (asume ids: Dior=1, Chanel=2, CK=3; Masculino=1, Femenino=2, Unisex=3)
-INSERT INTO perfumes (nombre, marca_id, categoria_id, precio, stock, descripcion, tamanio, tipo, fechaCreacion, fechaActualizacion) VALUES
- ('Sauvage', 1, 1, 89.99, 50, 'Aroma fresco y especiado', '100ml', 'EDT', NOW(), NOW()),
- ('J''adore', 1, 2, 119.50, 30, 'Floral luminoso', '100ml', 'EDP', NOW(), NOW()),
- ('Bleu de Chanel', 2, 1, 129.00, 40, 'Aromático amaderado', '100ml', 'EDP', NOW(), NOW()),
- ('CK One', 3, 3, 59.90, 100, 'Cítrico unisex', '100ml', 'EDT', NOW(), NOW());
+INSERT INTO perfumes (nombre, marca_id, categoria_id, precio, stock, descripcion, tamanio, tipo, imagen, fechaCreacion, fechaActualizacion) VALUES
+ ('Sauvage', 1, 1, 89.99, 50, 'Aroma fresco y especiado', '100ml', 'EDT', 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80', NOW(), NOW()),
+ ('J''adore', 1, 2, 119.50, 30, 'Floral luminoso', '100ml', 'EDP', 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&q=80', NOW(), NOW()),
+ ('Bleu de Chanel', 2, 1, 129.00, 40, 'Aromático amaderado', '100ml', 'EDP', 'https://images.unsplash.com/photo-1590080876-c9f5c6b8b5f5?w=500&q=80', NOW(), NOW()),
+ ('CK One', 3, 3, 59.90, 100, 'Cítrico unisex', '100ml', 'EDT', 'https://images.unsplash.com/photo-1577720643272-265b0e0d7ca4?w=500&q=80', NOW(), NOW());
 
 -- Clientes
 INSERT INTO clientes (nombre, apellido, email, telefono, direccion, ciudad, fechaRegistro, fechaActualizacion) VALUES

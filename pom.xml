@@ -110,6 +110,8 @@
                 <configuration>
                     <!-- Compilar con Java 21 -->
                     <release>21</release>
+                    <!-- Necesario para que Spring pueda resolver nombres de parámetros -->
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
             <plugin>

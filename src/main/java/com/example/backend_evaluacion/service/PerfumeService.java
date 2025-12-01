@@ -1,7 +1,11 @@
 package com.example.backend_evaluacion.service;
 
 import com.example.backend_evaluacion.entity.Perfume;
+import com.example.backend_evaluacion.entity.Marca;
+import com.example.backend_evaluacion.entity.Categoria;
 import com.example.backend_evaluacion.repository.PerfumeRepository;
+import com.example.backend_evaluacion.repository.MarcaRepository;
+import com.example.backend_evaluacion.repository.CategoriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,8 @@ import java.util.List;
 public class PerfumeService {
 
     private final PerfumeRepository repo;
+    private final MarcaRepository marcaRepo;
+    private final CategoriaRepository categoriaRepo;
 
     /**
      * Lista todos los perfumes disponibles
@@ -31,6 +37,19 @@ public class PerfumeService {
      */
     public Perfume guardar(Perfume p) {
         validarPerfume(p);
+        
+        // Si marca solo tiene ID, buscarla en la BD
+        if (p.getMarca() != null && p.getMarca().getId() != null && p.getMarca().getNombre() == null) {
+            p.setMarca(marcaRepo.findById(p.getMarca().getId()).orElseThrow(() -> 
+                new IllegalArgumentException("Marca no encontrada")));
+        }
+        
+        // Si categoría solo tiene ID, buscarla en la BD
+        if (p.getCategoria() != null && p.getCategoria().getId() != null && p.getCategoria().getNombre() == null) {
+            p.setCategoria(categoriaRepo.findById(p.getCategoria().getId()).orElseThrow(() -> 
+                new IllegalArgumentException("Categoría no encontrada")));
+        }
+        
         p.setFechaCreacion(LocalDateTime.now());
         p.setFechaActualizacion(LocalDateTime.now());
         return repo.save(p);
@@ -87,11 +106,23 @@ public class PerfumeService {
         }
 
         if (nuevo.getMarca() != null) {
-            p.setMarca(nuevo.getMarca());
+            // Si marca solo tiene ID, buscarla en la BD
+            if (nuevo.getMarca().getId() != null && nuevo.getMarca().getNombre() == null) {
+                p.setMarca(marcaRepo.findById(nuevo.getMarca().getId()).orElseThrow(() -> 
+                    new IllegalArgumentException("Marca no encontrada")));
+            } else {
+                p.setMarca(nuevo.getMarca());
+            }
         }
 
         if (nuevo.getCategoria() != null) {
-            p.setCategoria(nuevo.getCategoria());
+            // Si categoría solo tiene ID, buscarla en la BD
+            if (nuevo.getCategoria().getId() != null && nuevo.getCategoria().getNombre() == null) {
+                p.setCategoria(categoriaRepo.findById(nuevo.getCategoria().getId()).orElseThrow(() -> 
+                    new IllegalArgumentException("Categoría no encontrada")));
+            } else {
+                p.setCategoria(nuevo.getCategoria());
+            }
         }
 
         p.setFechaActualizacion(LocalDateTime.now());

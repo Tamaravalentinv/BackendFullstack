@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS perfumes (
   descripcion VARCHAR(500),
   tamanio VARCHAR(50),
   tipo VARCHAR(20),
+  imagen VARCHAR(1000),
   fechaCreacion DATETIME,
   fechaActualizacion DATETIME,
   PRIMARY KEY (id),
